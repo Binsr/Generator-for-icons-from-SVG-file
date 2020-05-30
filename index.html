@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        html,body{
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+        .zClas{
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+    </style>
+
+    <div>
+        <img class="zClas" style="z-index:-1;-moz-user-select: none;" id="myImg" src="#" alt="your image" draggable="false" >
+            <canvas id="canvas-element" width="800px" height="10000" style="z-index: 5;"></canvas>
+            <div class="zClas" id="forHide">
+                <input style="width: 100px;margin-top:100px;"  type='file' />
+                </br>
+            </div>
+    </div>
+
+    <div style="float:right;z-index: 9;position: absolute;top:0;right: 0;display:flex;flex-direction: row;">
+        <div style="display:flex;flex-direction: column;width: 150px;margin-right: 100px;">
+            <p style="color:rgb(255, 174, 0)">Svg image width</p>
+            <input id="svg_width"></input>
+
+            <p style="color:rgb(255, 174, 0)">Svg image height</p>
+            <input id="svg_height"></input>
+
+            <p style="color:rgb(255, 174, 0)">Icon width</p>
+            <input id="icon_width"></input>
+
+            <p style="color:rgb(255, 174, 0)">Icon height</p>
+            <input id="icon_height"></input>
+
+            <p style="color:rgb(255, 174, 0)">Background possition x</p>
+            <input id="background_x"></input>
+
+            <p style="color:rgb(255, 174, 0)">Background possition y</p>
+            <input id="background_y"></input>
+
+            <p>----</p>
+            <button id="calculate_btn" style="border: 0.5px 0.5px 0.5px 0.5px; border-style: solid; border-color: rgb(255, 174, 0);
+            border-radius: 3px 3px 3px 3px;">Get css code</button>
+        </div>
+        <textarea id="result" style="margin-top:100px;width: 300px;height: 60vh; background-color: rgb(49, 43, 43);color:rgb(255, 255, 255);">
+        </textarea>
+    </div>
+
+
+    <script src="index.js"></script> 
+</body>
+</html>
