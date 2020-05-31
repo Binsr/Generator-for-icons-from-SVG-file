@@ -48,7 +48,7 @@ function calc(svgW,svgH,icoW,icoH,icoX,icoY){
 }
 
 
-function writeResult(icoW,icoH,icoX,icoY){
+function writeResultRes(icoW,icoH,icoX,icoY){
 
     let resize= document.getElementById("resize_img").value;
     resize= Number(resize);
@@ -92,21 +92,81 @@ document.getElementById("calculate_btn").addEventListener("click", function(){
 
     calc(svgW,svgH,icoW,icoH,bakX,bakY);
 
-    writeResult(icoW,icoH,bakX,bakY);
-
-
-
+    writeResultRes(icoW,icoH,bakX,bakY);
 
 });
 
 //-----------------------------------------------------BASIC CODE GENERATOR----------------------------------------------------------------
+
+
+
+
+function calcN(svgW,svgH,icoW,icoH,icoX,icoY){
+
+    relX = resW;
+    relY = resH; //8
+
+    bakWR= svgW;
+    bakHR= svgH;
+
+    wR= icoW;
+    hR= icoH;
+
+    bakPx= icoX;
+    bakPy= icoY;
+
+}
+
+
+
+
 document.getElementById("code_generator").addEventListener("click", function(){
+    let svgW= document.getElementById("svg_width").value;
+    svgW= Number(svgW);
+    let svgH= document.getElementById("svg_height").value;
+    svgH= Number(svgH);
     
+    let icoW= document.getElementById("icon_width").value;
+    icoW= Number(icoW);
+    let icoH= document.getElementById("icon_height").value;
+    icoH= Number(icoH);
 
+    let bakX= document.getElementById("background_x").value;
+    bakX= Number(bakX);
+    let bakY= document.getElementById("background_y").value;
+    bakY= Number(bakY);
 
-
+    calcN(svgW,svgH,icoW,icoH,bakX,bakY);
+    writeResult(icoW,icoH,bakX,bakY);
 
 });
+
+function writeResult(icoW,icoH,icoX,icoY){
+
+    let resize= document.getElementById("resize_img").value;
+    resize= Number(resize);
+
+    document.getElementById("result").value="\n" + "\n" + "{" + "\n" 
+                                            +"  width: " + wR * resize + "px;" + '\n'
+                                            +"  height: " + hR *resize + "px;" + '\n'
+                                            +"  background-size: " + bakWR * resize + "px " + bakHR * resize + "px;" + '\n'
+                                            +"  background-repeat: no-repeat;" + '\n'
+                                            +"  display:inline-block;" + '\n'
+                                            +"  background-position: " + bakPx * resize + "px " + bakPy * resize + "px;" + '\n'
+                                            +"}" + '\n' +'\n';
+
+                                            // +"@media screen and (min-width: 1200px) and (min-height: 600px) {" + '\n'
+                                            // +"  width: " + icoW+ "px;" + '\n'
+                                            // +"  height: " + icoH + "px;" + '\n'
+                                            // +"  display:inline-block;" + '\n'
+                                            // +"}" + '\n' + '\n'
+                                            // +"{" + '\n'
+                                            // +"  background-position: " + icoX + "px " + icoY + "px;" + '\n'
+                                            // +"}";
+}
+
+
+
 
 
 
@@ -127,7 +187,7 @@ document.getElementById("code_generator").addEventListener("click", function(){
         this.defaultColor= "black";
         this.colision= null;
         this.color= this.defaultColor;
-        this.lineWidth= 3;
+        this.lineWidth= 2;
         
     }
 
@@ -357,7 +417,8 @@ function dragStop(event){
     hotSpotObjects.push(new Rect(newShape,hotSpotObjects.length));
     console.log(hotSpotObjects);
     setWidtHeight(hotSpotObjects[0]);
-    setBackPos(hotSpotObjects[0]);
+    setBackPos(hotSpotObjects[0].getCoordOfAllAngles());
+    console.log(hotSpotObjects[0].getCoordOfAllAngles());
     
 }
 
@@ -371,12 +432,15 @@ function setWidtHeight(obj){
 
 function setBackPos(obj){
 
+    let px= document.getElementById("background_x");
+    let py= document.getElementById("background_y");
+
+    // px.value= -((obj.rightUp.x - obj.leftUp.x)/2 + obj.leftUp.x);
+    // py.value= -((obj.rightDown.y - obj.rightUp.y)/2 + obj.rightUp.y);
+
+    px.value= -obj.leftUp.x;
+    py.value= -obj.leftUp.y;
 }
-
-
-
-
-
 
 function draw(ctx){
     ctx.clearRect(0,0, 1000, 10000);    	
