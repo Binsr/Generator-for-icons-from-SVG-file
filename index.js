@@ -1,4 +1,5 @@
 window.addEventListener('load', function() {
+    let resize= document.getElementById("resize_img").value= 1;
     document.querySelector('input[type="file"]').addEventListener('change', function() {
         if (this.files && this.files[0]) {
             var img = document.querySelector('img');  // $('img')[0]
@@ -15,6 +16,104 @@ window.addEventListener('load', function() {
         }
     });
   });
+
+
+//----------------------------------------------------------------RESPONISVE CODE GENERATOR---------------------------------------
+
+const resW= 1600;
+const resH= 800;
+
+let wR= 0;
+let hR= 0;
+let bakWR= 0;
+let bakHR= 0;
+let bakPx= 0;
+let bakPy= 0;
+
+
+function calc(svgW,svgH,icoW,icoH,icoX,icoY){
+
+    relX = resW/100;
+    relY = resH/100; //8
+
+    bakWR= svgW/relY;
+    bakHR= svgH/relY;
+
+    wR= icoW/relY;
+    hR= icoH/relY;
+
+    bakPx= icoX/relY;
+    bakPy= icoY/relY;
+
+}
+
+
+function writeResult(icoW,icoH,icoX,icoY){
+
+    let resize= document.getElementById("resize_img").value;
+    resize= Number(resize);
+
+    document.getElementById("result").value="\n" + "\n" + "{" + "\n" 
+                                            +"  width: " + wR * resize + "vmax;" + '\n'
+                                            +"  height: " + hR *resize + "vmax;" + '\n'
+                                            +"  background-size: " + bakWR * resize + "vmax " + bakHR * resize + "vmax;" + '\n'
+                                            +"  background-repeat: no-repeat;" + '\n'
+                                            +"  display:inline-block;" + '\n'
+                                            +"  background-position: " + bakPx * resize + "vmax " + bakPy * resize + "vmax;" + '\n'
+                                            +"}" + '\n' +'\n';
+
+                                            // +"@media screen and (min-width: 1200px) and (min-height: 600px) {" + '\n'
+                                            // +"  width: " + icoW+ "px;" + '\n'
+                                            // +"  height: " + icoH + "px;" + '\n'
+                                            // +"  display:inline-block;" + '\n'
+                                            // +"}" + '\n' + '\n'
+                                            // +"{" + '\n'
+                                            // +"  background-position: " + icoX + "px " + icoY + "px;" + '\n'
+                                            // +"}";
+}
+
+
+document.getElementById("calculate_btn").addEventListener("click", function(){
+
+    let svgW= document.getElementById("svg_width").value;
+    svgW= Number(svgW);
+    let svgH= document.getElementById("svg_height").value;
+    svgH= Number(svgH);
+    
+    let icoW= document.getElementById("icon_width").value;
+    icoW= Number(icoW);
+    let icoH= document.getElementById("icon_height").value;
+    icoH= Number(icoH);
+
+    let bakX= document.getElementById("background_x").value;
+    bakX= Number(bakX);
+    let bakY= document.getElementById("background_y").value;
+    bakY= Number(bakY);
+
+    calc(svgW,svgH,icoW,icoH,bakX,bakY);
+
+    writeResult(icoW,icoH,bakX,bakY);
+
+
+
+
+});
+
+//-----------------------------------------------------BASIC CODE GENERATOR----------------------------------------------------------------
+document.getElementById("code_generator").addEventListener("click", function(){
+    
+
+
+
+
+});
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -258,6 +357,7 @@ function dragStop(event){
     hotSpotObjects.push(new Rect(newShape,hotSpotObjects.length));
     console.log(hotSpotObjects);
     setWidtHeight(hotSpotObjects[0]);
+    setBackPos(hotSpotObjects[0]);
     
 }
 
@@ -266,7 +366,14 @@ function setWidtHeight(obj){
 
     document.getElementById("icon_width").value= Math.abs(obj.startPos.x-obj.endPos.x);
     document.getElementById("icon_height").value= Math.abs(obj.startPos.y - obj.endPos.y);
+
 }
+
+function setBackPos(obj){
+
+}
+
+
 
 
 
